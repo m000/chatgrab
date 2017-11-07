@@ -101,6 +101,5 @@ ENV/
 .mypy_cache/
 
 # local android sdk
-/android-sdk/
-
+/android-sdk
 
