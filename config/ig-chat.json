@@ -1,0 +1,9 @@
+{
+	"initial_crop": [ 310, 130, 310, 214 ],
+	"band_parameters": [45, 200],
+	"cmp_parameters": [0.1, 0.0],
+	"input_pattern": "grab/*.png",
+	"output_pattern": "stitch/%03d.jpg",
+	"batch_size": 9,
+	"reverse_order": true
+}

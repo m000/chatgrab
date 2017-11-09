@@ -12,6 +12,7 @@ from functools import reduce
 from PIL import Image, ImageStat, ImageChops
 
 CONFIG = 'stitcher.json'
+JPEG_QUALITY = 90
 logger = logging.getLogger()
 
 def image_stats(img, cmpband, cmph):
@@ -115,7 +116,7 @@ def process_batch(batch, batchn, config):
     for f in batch:
         img = Image.open(f);
         logger.info("Cropping %s on %s", f, config['initial_crop'])
-        cimg = imgcrop(img, *config['initial_crop'], show=True)
+        cimg = imgcrop(img, *config['initial_crop'], show=False)
 
         cimg_stats = image_stats(cimg, cmpband, cmph)
         if cimg_prev is not None:
@@ -134,7 +135,10 @@ def process_batch(batch, batchn, config):
         cimg_prev = cimg
         cimg_stats_prev = cimg_stats
 
-    stitched.save(config['output_pattern'] % batchn)
+    if config['output_pattern'].lower().endswith('.jpg'):
+        stitched.save(config['output_pattern'] % batchn, quality=JPEG_QUALITY)
+    else:
+        stitched.save(config['output_pattern'] % batchn)
 
 if __name__ == '__main__':
     # setup logging
